@@ -1,10 +1,16 @@
-version: '3.1'
+version: '3'
 
 services:
-  flask:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  simwire-flask-ecs:
+    build: ./simwire-backend
+    image: simwire-flask-ecs:latest
     container_name: simwire-flask-ecs
-    ports:
-      - "5000:5000"
+    network_mode: host
+
+  simwire-flask-ecs-nginx:
+    build: ./nginx
+    image: simwire-flask-ecs-nginx:latest
+    container_name: simwire-flask-ecs-nginx
+    network_mode: host
+    depends_on:
+      - simwire-flask-ecs
